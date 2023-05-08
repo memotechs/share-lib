@@ -6,14 +6,20 @@ export class ServiceGeneric<
   CustomRepository extends Repository<Entity>,
 > {
   protected repository: CustomRepository;
+  protected connection: Connection | EntityManager;
   constructor(
-    protected readonly connection: Connection | EntityManager,
+    protected readonly connectionOrManager: Connection | EntityManager,
     repositoryType: { new (): CustomRepository },
   ) {
-    if (connection instanceof EntityManager) {
-      this.repository = connection.getCustomRepository(repositoryType);
+    if (connectionOrManager instanceof EntityManager) {
+      this.connection = connectionOrManager;
     } else {
-      this.repository = connection.getCustomRepository(repositoryType);
+      this.connection = connectionOrManager;
     }
+    this.repository = this.connection.getCustomRepository(repositoryType);
   }
+
+  getWithPagination = () => {
+    //
+  };
 }
