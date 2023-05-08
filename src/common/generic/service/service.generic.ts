@@ -6,13 +6,13 @@ export class ServiceGeneric<
   CustomRepository extends Repository<Entity>,
 > {
   protected repository: CustomRepository;
-  protected connection: Connection | EntityManager;
+  protected connection: Connection;
   constructor(
     protected readonly connectionOrManager: Connection | EntityManager,
     repositoryType: { new (): CustomRepository },
   ) {
     if (connectionOrManager instanceof EntityManager) {
-      this.connection = connectionOrManager;
+      this.connection = connectionOrManager.connection;
     } else {
       this.connection = connectionOrManager;
     }
