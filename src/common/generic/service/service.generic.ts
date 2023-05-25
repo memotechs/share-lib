@@ -19,7 +19,7 @@ export abstract class ServiceGeneric<
   protected connection: Connection;
   constructor(
     protected readonly connectionOrManager: Connection | EntityManager,
-    repositoryType: { new (): CustomRepository },
+    repositoryType: { new (connection: Connection): CustomRepository },
   ) {
     if (connectionOrManager instanceof EntityManager) {
       this.connection = connectionOrManager.connection;
