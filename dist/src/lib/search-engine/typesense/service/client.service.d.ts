@@ -1,0 +1,33 @@
+import { Client } from 'typesense';
+import { Type } from '@nestjs/common';
+import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
+import { SearchParams, SearchOptions, SearchResponse, DeleteResponse, ImportResponse } from 'typesense/lib/Typesense/Documents';
+import { BaseDocument } from '../../document';
+import { SearchDocumentService } from '../../interface';
+import { EntityGeneric } from '../../../../common';
+import { PaginationResponse } from '../../../../response';
+export declare abstract class ClientService<Document extends BaseDocument, Entity extends EntityGeneric> implements SearchDocumentService<Document> {
+    protected readonly client: Client;
+    protected readonly schema: CollectionCreateSchema;
+    protected readonly prefix: string;
+    protected readonly entity: Type<Entity>;
+    protected abstract cache_s: number;
+    protected readonly skipCheckSchema: boolean;
+    constructor(client: Client, schema: CollectionCreateSchema, prefix: string);
+    searchDocument(searchParameters: SearchParams, options: SearchOptions): Promise<SearchResponse<any>>;
+    getAllRawDocs: (searchParameters: SearchParams, options: SearchOptions) => Promise<import("typesense/lib/Typesense/Documents").SearchResponseHit<any>[]>;
+    importIndex(data: Document[]): Promise<ImportResponse[]>;
+    deleteOutOfDate(data: string[] | number[], key: string): Promise<any>;
+    insertIndex(data: Document): Promise<any>;
+    updateIndex(data: Document): Promise<any>;
+    updateDocumentById: (data: Document) => Promise<{}>;
+    upsertOrDeleteIndex(datas: Document): Promise<void>;
+    deleteIndex(data: Document): Promise<DeleteResponse>;
+    deleteBatchIndex(ids: string[]): Promise<DeleteResponse>;
+    deleteIndexByKeyValue(key: string, value: number): Promise<DeleteResponse>;
+    transforms: (searchResponse: SearchResponse<Record<string, unknown>>) => Entity[];
+    transform: (searchResponse: SearchResponse<Record<string, unknown>>) => Entity;
+    responseList: (searchResponse: SearchResponse<Record<string, unknown>>, offset?: number) => PaginationResponse<Entity>;
+    private ensureCollection;
+    private checkSchemaName;
+}
