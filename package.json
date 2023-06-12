@@ -1,6 +1,6 @@
 {
-  "name": "mamakh-share-lib",
-  "version": "0.0.2",
+  "name": "mm-share-lib",
+  "version": "0.0.1",
   "description": "Share the generic service, entity, dto.",
   "author": "Mesa SOT",
   "license": "MIT",
