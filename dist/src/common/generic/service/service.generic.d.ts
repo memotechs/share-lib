@@ -11,8 +11,8 @@ export declare abstract class ServiceGeneric<Entity extends EntityGeneric, Custo
     constructor(connectionOrManager: Connection | EntityManager, repositoryType: {
         new (connection: Connection): CustomRepository;
     });
-    create: (entity: Entity) => Promise<Entity>;
-    update: (entity: Entity) => Promise<Entity>;
-    getListWithPagination: (paginationDto: PaginationDto, callback?: (query: SelectQueryBuilder<Entity>) => void) => Promise<PaginationResponse<Entity>>;
-    getAutocompleteWithPagination: (paginationDto: PaginationDto, filter: BaseFilterDto, callback?: (query: SelectQueryBuilder<Entity>) => void) => Promise<PaginationResponse<Entity>>;
+    create(entity: Entity): Promise<Entity>;
+    update(entity: Entity): Promise<Entity>;
+    getListWithPagination(paginationDto: PaginationDto, callback?: (query: SelectQueryBuilder<Entity>) => void): Promise<PaginationResponse<Entity>>;
+    getAutocompleteWithPagination(paginationDto: PaginationDto, filter: BaseFilterDto, callback?: (query: SelectQueryBuilder<Entity>) => void): Promise<PaginationResponse<Entity>>;
 }

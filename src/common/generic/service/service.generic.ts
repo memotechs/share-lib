@@ -29,18 +29,18 @@ export abstract class ServiceGeneric<
     this.repository = this.connection.getCustomRepository(repositoryType);
   }
 
-  create = async (entity: Entity): Promise<Entity> => {
+  async create(entity: Entity): Promise<Entity> {
     return this.repository.save(entity);
-  };
+  }
 
-  update = async (entity: Entity): Promise<Entity> => {
+  async update(entity: Entity): Promise<Entity> {
     return this.repository.save(entity);
-  };
+  }
 
-  getListWithPagination = async (
+  async getListWithPagination(
     paginationDto: PaginationDto,
     callback?: (query: SelectQueryBuilder<Entity>) => void,
-  ): Promise<PaginationResponse<Entity>> => {
+  ): Promise<PaginationResponse<Entity>> {
     const { limit = 25, offset = 0 } = paginationDto;
     const query = this.repository.createQueryBuilder(this.entityName);
     query.limit(limit);
@@ -61,13 +61,13 @@ export abstract class ServiceGeneric<
     const total = await query.getCount();
     const response = new PaginationResponse(entities, total, limit, offset);
     return response;
-  };
+  }
 
-  getAutocompleteWithPagination = async (
+  async getAutocompleteWithPagination(
     paginationDto: PaginationDto,
     filter: BaseFilterDto,
     callback?: (query: SelectQueryBuilder<Entity>) => void,
-  ): Promise<PaginationResponse<Entity>> => {
+  ): Promise<PaginationResponse<Entity>> {
     const { limit = 25, offset = 0 } = paginationDto;
     const query = this.repository.createQueryBuilder(this.entityName);
     query.limit(limit);
@@ -108,5 +108,5 @@ export abstract class ServiceGeneric<
     }
     const response = new PaginationResponse(entities, total, limit, offset);
     return response;
-  };
+  }
 }
