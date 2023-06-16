@@ -5,9 +5,9 @@ import {
   SelectQueryBuilder,
 } from 'typeorm';
 import { EntityGeneric } from '../entity';
-import { PaginationDto, BaseFilterDto } from '../../../dto';
+import { PaginationDto, BaseFilterDto } from '../../dto';
 import { EntityStateConstant } from '../../constant';
-import { PaginationResponse } from '../../../response';
+import { PaginationResponse } from '../../response';
 
 export abstract class ServiceGeneric<
   Entity extends EntityGeneric,

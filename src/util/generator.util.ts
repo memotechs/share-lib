@@ -1,3 +1,5 @@
+import * as bcrypt from 'bcrypt';
+
 export const generateKey = (length = 36) => {
   const chars =
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -15,4 +17,11 @@ export const generateDigitCode = (length = 4): string => {
     Number(startAt) + Math.random() * Number(endAt),
   )}`;
   return generateCode;
+};
+
+export const generatePassword = async (
+  password: string,
+  saltOrRounds = 10,
+): Promise<string> => {
+  return await bcrypt.hash(password, saltOrRounds);
 };
