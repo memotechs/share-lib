@@ -11,7 +11,7 @@ import {
 } from 'typesense/lib/Typesense/Documents';
 import { BaseDocument } from '../../document';
 import { SearchDocumentService } from '../../interface';
-import { EntityGeneric } from '../../../../common';
+import { EntityGeneric } from '../../../../generic';
 import { PaginationResponse } from '../../../../response';
 
 export abstract class ClientService<

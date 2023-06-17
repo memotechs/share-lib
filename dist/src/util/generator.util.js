@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateDigitCode = exports.generateKey = void 0;
+exports.comparePassword = exports.generatePassword = exports.generateDigitCode = exports.generateKey = void 0;
+const bcrypt = require("bcrypt");
 const generateKey = (length = 36) => {
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let result = '';
@@ -17,4 +18,12 @@ const generateDigitCode = (length = 4) => {
     return generateCode;
 };
 exports.generateDigitCode = generateDigitCode;
+const generatePassword = async (password, saltOrRounds = 10) => {
+    return await bcrypt.hash(password, saltOrRounds);
+};
+exports.generatePassword = generatePassword;
+const comparePassword = (password, hashPassword) => {
+    return bcrypt.compare(password, hashPassword);
+};
+exports.comparePassword = comparePassword;
 //# sourceMappingURL=generator.util.js.map

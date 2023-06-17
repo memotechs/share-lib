@@ -25,3 +25,10 @@ export const generatePassword = async (
 ): Promise<string> => {
   return await bcrypt.hash(password, saltOrRounds);
 };
+
+export const comparePassword = (
+  password: string,
+  hashPassword: string,
+): Promise<boolean> => {
+  return bcrypt.compare(password, hashPassword);
+};

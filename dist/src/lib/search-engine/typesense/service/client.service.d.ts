@@ -4,7 +4,7 @@ import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
 import { SearchParams, SearchOptions, SearchResponse, DeleteResponse, ImportResponse } from 'typesense/lib/Typesense/Documents';
 import { BaseDocument } from '../../document';
 import { SearchDocumentService } from '../../interface';
-import { EntityGeneric } from '../../../../common';
+import { EntityGeneric } from '../../../../generic';
 import { PaginationResponse } from '../../../../response';
 export declare abstract class ClientService<Document extends BaseDocument, Entity extends EntityGeneric> implements SearchDocumentService<Document> {
     protected readonly client: Client;

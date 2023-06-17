@@ -12,7 +12,7 @@ const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
 const typesense_constants_1 = require("./typesense.constants");
 const typesense_providers_1 = require("./typesense.providers");
-let TypesenseModule = TypesenseModule_1 = class TypesenseModule {
+let TypesenseModule = exports.TypesenseModule = TypesenseModule_1 = class TypesenseModule {
     static register(options = {}) {
         const optionsProviders = (0, typesense_providers_1.createTypesenseOptionsProvider)(options);
         const exportsProviders = (0, typesense_providers_1.createTypesenseExportsProvider)();
@@ -60,10 +60,9 @@ let TypesenseModule = TypesenseModule_1 = class TypesenseModule {
         };
     }
 };
-TypesenseModule = TypesenseModule_1 = __decorate([
+exports.TypesenseModule = TypesenseModule = TypesenseModule_1 = __decorate([
     (0, common_1.Module)({
         imports: [core_1.DiscoveryModule],
     })
 ], TypesenseModule);
-exports.TypesenseModule = TypesenseModule;
 //# sourceMappingURL=typesense.module.js.map

@@ -1,4 +1,4 @@
-import { EntityGeneric } from '../../../common';
+import { EntityGeneric } from '../../../generic';
 import { BaseDocument } from '../document';
 
 export interface TransformerService<

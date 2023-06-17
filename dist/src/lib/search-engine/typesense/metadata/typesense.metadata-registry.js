@@ -9,7 +9,7 @@ var TypesenseMetadataRegistry_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TypesenseMetadataRegistry = void 0;
 const common_1 = require("@nestjs/common");
-let TypesenseMetadataRegistry = TypesenseMetadataRegistry_1 = class TypesenseMetadataRegistry {
+let TypesenseMetadataRegistry = exports.TypesenseMetadataRegistry = TypesenseMetadataRegistry_1 = class TypesenseMetadataRegistry {
     constructor() {
         this.logger = new common_1.Logger(TypesenseMetadataRegistry_1.name);
         this.schemas = new Map();
@@ -27,8 +27,7 @@ let TypesenseMetadataRegistry = TypesenseMetadataRegistry_1 = class TypesenseMet
         return this.schemas.keys();
     }
 };
-TypesenseMetadataRegistry = TypesenseMetadataRegistry_1 = __decorate([
+exports.TypesenseMetadataRegistry = TypesenseMetadataRegistry = TypesenseMetadataRegistry_1 = __decorate([
     (0, common_1.Injectable)()
 ], TypesenseMetadataRegistry);
-exports.TypesenseMetadataRegistry = TypesenseMetadataRegistry;
 //# sourceMappingURL=typesense.metadata-registry.js.map
