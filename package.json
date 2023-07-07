@@ -25,6 +25,7 @@
     "@babel/runtime": "^7.22.5",
     "@nestjs/common": "^9.4.2",
     "@nestjs/core": "^9.4.2",
+    "@nestjs/microservices": "^9.4.3",
     "@nestjs/platform-express": "^9.4.2",
     "@nestjs/typeorm": "^9.0.1",
     "class-transformer": "^0.5.1",
