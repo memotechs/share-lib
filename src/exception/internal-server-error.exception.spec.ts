@@ -1,12 +1,12 @@
-import { NotFoundException } from './not-found-error.exception';
+import { InternalServerException } from './internal-server-error.exception';
 import { HttpStatus } from '@nestjs/common';
 
-describe('NotFoundException', () => {
+describe('InternalServerException', () => {
   it('should set default message and status code if no parameters are provided', () => {
-    const error = new NotFoundException();
+    const error = new InternalServerException();
 
-    expect(error.message).toBe('NotFoundException');
-    expect(error.statusCode).toBe(HttpStatus.NOT_FOUND);
+    expect(error.message).toBe('InternalServerException');
+    expect(error.statusCode).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
     expect(error.parameters).toBeUndefined();
   });
 
@@ -14,7 +14,7 @@ describe('NotFoundException', () => {
     const customMessage = 'Custom message';
     const customStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
     const customParameters = { key: 'value' };
-    const error = new NotFoundException(customMessage, customParameters);
+    const error = new InternalServerException(customMessage, customParameters);
 
     expect(error.message).toBe(customMessage);
     expect(error.statusCode).toBe(customStatusCode);

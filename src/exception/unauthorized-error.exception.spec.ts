@@ -1,20 +1,20 @@
-import { NotFoundException } from './not-found-error.exception';
+import { UnauthorizedException } from './unauthorized-error.exception';
 import { HttpStatus } from '@nestjs/common';
 
-describe('NotFoundException', () => {
+describe('UnauthorizedException', () => {
   it('should set default message and status code if no parameters are provided', () => {
-    const error = new NotFoundException();
+    const error = new UnauthorizedException();
 
-    expect(error.message).toBe('NotFoundException');
-    expect(error.statusCode).toBe(HttpStatus.NOT_FOUND);
+    expect(error.message).toBe('UnauthorizedException');
+    expect(error.statusCode).toBe(HttpStatus.UNAUTHORIZED);
     expect(error.parameters).toBeUndefined();
   });
 
   it('should set custom message, status code, and parameters if provided', () => {
     const customMessage = 'Custom message';
-    const customStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+    const customStatusCode = HttpStatus.UNAUTHORIZED;
     const customParameters = { key: 'value' };
-    const error = new NotFoundException(customMessage, customParameters);
+    const error = new UnauthorizedException(customMessage, customParameters);
 
     expect(error.message).toBe(customMessage);
     expect(error.statusCode).toBe(customStatusCode);

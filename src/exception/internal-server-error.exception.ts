@@ -1,8 +1,12 @@
 import { HttpStatus } from '@nestjs/common';
 import { BaseException, ParametersType } from './base.exception';
 
-export class NotFoundException extends BaseException {
+export class InternalServerException extends BaseException {
   constructor(message?: string, parameters?: ParametersType) {
-    super(message ?? 'NotFoundException', HttpStatus.NOT_FOUND, parameters);
+    super(
+      message ?? 'InternalServerException',
+      HttpStatus.INTERNAL_SERVER_ERROR,
+      parameters,
+    );
   }
 }

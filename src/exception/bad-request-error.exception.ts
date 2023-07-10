@@ -1,7 +1,8 @@
-import { BadRequestException } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common';
+import { BaseException, ParametersType } from './base.exception';
 
-export class BadRequestErrorException extends BadRequestException {
-  constructor(options: object) {
-    super(options);
+export class BadRequestException extends BaseException {
+  constructor(message?: string, parameters?: ParametersType) {
+    super(message ?? 'BadRequestException', HttpStatus.BAD_REQUEST, parameters);
   }
 }
