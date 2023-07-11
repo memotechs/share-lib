@@ -1,3 +1,3 @@
 export class BaseDocument {
-    id: string;
+  id?: string;
 }

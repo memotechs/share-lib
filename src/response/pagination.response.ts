@@ -1,12 +1,22 @@
-export class PaginationResponse<T> {
-  data: T[];
-  total?: number;
-  offset?: number;
-  limit?: number;
-  hasNext?: boolean;
+import { ApiPropertyOptional } from '@nestjs/swagger';
+export class PaginationResponse<TData> {
+  @ApiPropertyOptional()
+  data: TData[];
+
+  @ApiPropertyOptional()
+  total?: number = 0;
+
+  @ApiPropertyOptional()
+  offset?: number = 0;
+
+  @ApiPropertyOptional()
+  limit?: number = 25;
+
+  @ApiPropertyOptional()
+  hasNext?: boolean = false;
 
   constructor(
-    data: T[],
+    data: TData[],
     total: number = data?.length || 0,
     limit?: number,
     offset?: number,
@@ -29,7 +39,7 @@ export class PaginationResponse<T> {
     };
   }
 
-  promise(): Promise<PaginationResponse<T>> {
+  promise(): Promise<PaginationResponse<TData>> {
     return new Promise((resolve, reject) => {
       resolve(this);
     });

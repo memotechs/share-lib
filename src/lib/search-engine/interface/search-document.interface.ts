@@ -1,5 +1,13 @@
-import { SearchOptions, SearchParams, SearchResponse, DocumentSchema } from 'typesense/lib/Typesense/Documents';
+import {
+  SearchOptions,
+  SearchParams,
+  SearchResponse,
+  DocumentSchema,
+} from 'typesense/lib/Typesense/Documents';
 
 export interface SearchDocumentService<Document extends DocumentSchema> {
-    searchDocument(searchParameters: SearchParams, options: SearchOptions): Promise<SearchResponse<any>>;
+  searchDocument(
+    searchParameters: SearchParams,
+    options: SearchOptions,
+  ): Promise<SearchResponse<Document>>;
 }
