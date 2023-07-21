@@ -3,11 +3,12 @@ import Handlebars from 'handlebars';
 import nodemailer from 'nodemailer';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AllConfigType } from '../../config';
 
 @Injectable()
 export class MailerService {
   private readonly transporter: nodemailer.Transporter;
-  constructor(private readonly configService: ConfigService) {
+  constructor(private readonly configService: ConfigService<AllConfigType>) {
     this.transporter = nodemailer.createTransport({
       host: configService.get('mail.host', { infer: true }),
       port: configService.get('mail.port', { infer: true }),
