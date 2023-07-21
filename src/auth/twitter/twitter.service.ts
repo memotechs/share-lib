@@ -10,6 +10,7 @@ export class TwitterService {
   constructor(private configService: ConfigService<AllConfigType>) {}
 
   async getProfileByToken(loginDto: TwitterLoginDto): Promise<SocialInterface> {
+    const { accessTokenKey, accessTokenSecret } = loginDto;
     const twitter = new Twitter({
       consumer_key: this.configService.getOrThrow('twitter.consumerKey', {
         infer: true,
@@ -17,8 +18,8 @@ export class TwitterService {
       consumer_secret: this.configService.getOrThrow('twitter.consumerSecret', {
         infer: true,
       }),
-      access_token_key: loginDto.accessTokenKey,
-      access_token_secret: loginDto.accessTokenSecret,
+      access_token_key: accessTokenKey,
+      access_token_secret: accessTokenSecret,
     });
 
     const data: Twitter.ResponseData = await new Promise((resolve) => {
