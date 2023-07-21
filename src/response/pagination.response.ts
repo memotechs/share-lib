@@ -1,18 +1,23 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 export class PaginationResponse<TData> {
   @ApiPropertyOptional()
   data: TData[];
 
   @ApiPropertyOptional()
+  @Type(() => Number)
   total?: number = 0;
 
   @ApiPropertyOptional()
+  @Type(() => Number)
   offset?: number = 0;
 
   @ApiPropertyOptional()
+  @Type(() => Number)
   limit?: number = 25;
 
   @ApiPropertyOptional()
+  @Type(() => Boolean)
   hasNext?: boolean = false;
 
   constructor(

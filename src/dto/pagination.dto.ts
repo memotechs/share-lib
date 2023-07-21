@@ -1,12 +1,16 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 export class PaginationDto {
   @ApiPropertyOptional()
-  query: string;
+  @Type(() => String)
+  query?: string;
 
   @ApiPropertyOptional()
-  limit = 25;
+  @Type(() => Number)
+  limit?: number = 25;
 
   @ApiPropertyOptional()
-  offset = 0;
+  @Type(() => Number)
+  offset?: number = 0;
 }

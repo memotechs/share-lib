@@ -1,14 +1,14 @@
 import { Client } from 'typesense';
 import { Logger, Type } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
-import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
+import { CollectionCreateSchema } from '../collection';
 import {
   SearchParams,
   SearchOptions,
   SearchResponse,
   DeleteResponse,
   ImportResponse,
-} from 'typesense/lib/Typesense/Documents';
+} from '../document';
 import { BaseDocument } from '../../document';
 import { SearchDocumentService } from '../../interface';
 import { EntityGeneric } from '../../../../generic';
@@ -19,6 +19,7 @@ export abstract class ClientService<
   Entity extends EntityGeneric,
 > implements SearchDocumentService<Document>
 {
+  private readonly logger = new Logger(ClientService.name);
   protected readonly entity: Type<Entity>;
   protected abstract cache_s: number;
   protected readonly skipCheckSchema: boolean = false;
@@ -81,6 +82,7 @@ export abstract class ClientService<
       }
       return documents;
     } catch (error) {
+      this.logger.error(error);
       return null;
     }
   }
@@ -110,7 +112,7 @@ export abstract class ClientService<
           .documents()
           .import(data, { action: 'upsert' });
       } catch (error) {
-        console.log(error);
+        this.logger.error(error);
       }
     }
   }
