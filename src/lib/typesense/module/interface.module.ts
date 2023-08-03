@@ -3,9 +3,11 @@ import { Type } from '@nestjs/common/interfaces';
 
 export interface TypesenseNodeOptions {
   host: string;
-  port: string;
+  port: number;
   protocol: string;
 }
+
+type LogLevelNames = 'trace' | 'debug' | 'info' | 'warn' | 'error';
 
 export interface TypesenseModuleOptions {
   nodes?: Array<TypesenseNodeOptions>;
@@ -14,7 +16,7 @@ export interface TypesenseModuleOptions {
   connectionTimeoutSeconds?: number;
   retryIntervalSeconds?: number;
   healthcheckIntervalSeconds?: number;
-  logLevel?: string;
+  logLevel?: LogLevelNames;
 }
 
 export interface TypesenseOptionsFactory {

@@ -1,13 +1,13 @@
-import { Provider } from '@nestjs/common';
-
 import { Client } from 'typesense';
-
-import { TypesenseCollectionsCreator } from '../collections';
-import { TypesenseMetadataAccessor } from '../metadata';
-import { TypesenseMetadataExplorer } from '../metadata';
-import { TypesenseMetadataRegistry } from '../metadata';
-import { TypesenseModuleOptions } from './typesense-module.interface';
-import { TYPESENSE_MODULE_OPTIONS } from './typesense.constants';
+import { Provider } from '@nestjs/common';
+import { TypesenseCollectionsCreator } from '../collection';
+import {
+  TypesenseMetadataAccessor,
+  TypesenseMetadataRegistry,
+  TypesenseMetadataExplorer,
+} from '../metadata';
+import { TypesenseModuleOptions } from './interface.module';
+import { TYPESENSE_MODULE_OPTIONS } from './typesense.constant';
 
 export const createTypesenseOptionsProvider = (
   options: TypesenseModuleOptions = {},

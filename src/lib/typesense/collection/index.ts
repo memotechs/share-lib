@@ -1,1 +1,1 @@
-// export { CollectionSchema } from 'typesense/src/Typesense/Collection';
+export * from './typesense-colletctions.creator';
