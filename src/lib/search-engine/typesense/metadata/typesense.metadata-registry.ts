@@ -1,28 +1,28 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common';
 
-import { Schema }     from './schema.metadata'
+import { Schema } from './schema.metadata';
 
-type Constructor = new (...args: any[]) => Record<string, unknown> // {}
+type Constructor = new (...args: unknown[]) => Record<string, unknown>;
 
 @Injectable()
 export class TypesenseMetadataRegistry {
-  private logger = new Logger(TypesenseMetadataRegistry.name)
+  private logger = new Logger(TypesenseMetadataRegistry.name);
 
-  private schemas: Map<Constructor, Schema> = new Map()
+  private schemas: Map<Constructor, Schema> = new Map();
 
   addSchema(target: Constructor, schema: Schema) {
     if (this.schemas.has(target)) {
-      this.logger.warn(`Schema ${target} already exists`)
+      this.logger.warn(`Schema ${target} already exists`);
     }
 
-    this.schemas.set(target, schema)
+    this.schemas.set(target, schema);
   }
 
   getSchemaByTarget(target: Constructor) {
-    return this.schemas.get(target)
+    return this.schemas.get(target);
   }
 
   getTargets() {
-    return this.schemas.keys()
+    return this.schemas.keys();
   }
 }

@@ -1,19 +1,17 @@
-/* eslint-disable max-classes-per-file */
+import { Module } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
 
-import { Module }                   from '@nestjs/common'
-import { Test }                     from '@nestjs/testing'
-
-import { TypesenseModuleOptions }   from './typesense-module.interface'
-import { TYPESENSE_MODULE_OPTIONS } from './typesense.constants'
-import { TypesenseModule }          from './typesense.module'
+import { TypesenseModuleOptions } from './typesense-module.interface';
+import { TYPESENSE_MODULE_OPTIONS } from './typesense.constants';
+import { TypesenseModule } from './typesense.module';
 
 describe('typesense', () => {
   describe('module', () => {
-    let module
+    let module;
 
     afterEach(async () => {
-      await module.close()
-    })
+      await module.close();
+    });
 
     it(`register`, async () => {
       module = await Test.createTestingModule({
@@ -22,10 +20,10 @@ describe('typesense', () => {
             apiKey: 'test',
           }),
         ],
-      }).compile()
+      }).compile();
 
-      expect(module.get(TYPESENSE_MODULE_OPTIONS)).toBeDefined()
-    })
+      expect(module.get(TYPESENSE_MODULE_OPTIONS)).toBeDefined();
+    });
 
     it(`register async use factory`, async () => {
       module = await Test.createTestingModule({
@@ -36,17 +34,17 @@ describe('typesense', () => {
             }),
           }),
         ],
-      }).compile()
+      }).compile();
 
-      expect(module.get(TYPESENSE_MODULE_OPTIONS)).toBeDefined()
-    })
+      expect(module.get(TYPESENSE_MODULE_OPTIONS)).toBeDefined();
+    });
 
     it(`register async use class`, async () => {
       class TestTypesenseModuleOptions {
         createTypesenseOptions(): TypesenseModuleOptions {
           return {
             apiKey: 'test',
-          }
+          };
         }
       }
 
@@ -56,17 +54,17 @@ describe('typesense', () => {
             useClass: TestTypesenseModuleOptions,
           }),
         ],
-      }).compile()
+      }).compile();
 
-      expect(module.get(TYPESENSE_MODULE_OPTIONS)).toBeDefined()
-    })
+      expect(module.get(TYPESENSE_MODULE_OPTIONS)).toBeDefined();
+    });
 
     it(`register async use exists`, async () => {
       class TestTypesenseModuleOptions {
         createTypesenseOptions(): TypesenseModuleOptions {
           return {
             apiKey: 'test',
-          }
+          };
         }
       }
 
@@ -86,9 +84,9 @@ describe('typesense', () => {
             useExisting: TestTypesenseModuleOptions,
           }),
         ],
-      }).compile()
+      }).compile();
 
-      expect(module.get(TYPESENSE_MODULE_OPTIONS)).toBeDefined()
-    })
-  })
-})
+      expect(module.get(TYPESENSE_MODULE_OPTIONS)).toBeDefined();
+    });
+  });
+});
