@@ -1,1 +1,1 @@
-export * from 'typesense';
+export * from './typesense';
