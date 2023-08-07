@@ -9,7 +9,7 @@ export async function microserviceSetup(
   serviceName: string,
 ) {
   AppUtils.killAppWithGrace(app);
-  const protoBasePath = process.cwd() + '/libs/proto-schema/src/proto';
+  const protoBasePath = 'node_modules/mm-proto-share/src';
   const host = process.env['GRPC_HOST'];
   const port = process.env['GRPC_PORT'];
   const options = {
