@@ -13,7 +13,8 @@ export class DataSourceManager {
 
   public static getInstance(): DataSourceManager {
     if (!DataSourceManager.instance) {
-      DataSourceManager.instance = new DataSourceManager();
+      // TODO: Fix DataSourceManager object instantiation
+      // DataSourceManager.instance = new DataSourceManager();
     }
 
     return DataSourceManager.instance;
