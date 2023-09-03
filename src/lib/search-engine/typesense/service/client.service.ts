@@ -3,16 +3,17 @@ import { Logger, Type } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { CollectionCreateSchema } from '../collection';
 import {
-  SearchParams,
-  SearchOptions,
-  SearchResponse,
   DeleteResponse,
   ImportResponse,
+  SearchOptions,
+  SearchParams,
+  SearchResponse,
 } from '../document';
 import { BaseDocument } from '../../document';
 import { SearchDocumentService } from '../../interface';
 import { EntityGeneric } from '../../../../generic';
 import { PaginationResponse } from '../../../../response';
+import { BaseFilterDto } from '../../../../dto';
 
 export abstract class ClientService<
   Document extends BaseDocument,
@@ -23,6 +24,7 @@ export abstract class ClientService<
   protected readonly entity: Type<Entity>;
   protected abstract cache_s: number;
   protected readonly skipCheckSchema: boolean = false;
+
   constructor(
     protected readonly client: Client,
     protected readonly schema: CollectionCreateSchema,
@@ -33,31 +35,42 @@ export abstract class ClientService<
     }
   }
 
-  // searchDocument(searchParameters: SearchParams, options: SearchOptions) {
-  //     const {
-  //         per_page = 25,
-  //         filter_by,
-  //         archived = false,
-  //     } = { ...searchParameters };
-  //     searchParameters.per_page = per_page;
-  //     return this.client.collections(this?.schema?.name || this.prefix).documents().search(searchParameters, options);
-  // }
+  getCollectionName(): string {
+    return this?.schema?.name || this.prefix;
+  }
 
   async searchDocument(
     searchParameters: SearchParams,
     options: SearchOptions,
+    filter?: BaseFilterDto,
+  ): Promise<SearchResponse<any>> {
+    return this.searchDocumentByCollection(
+      this.getCollectionName(),
+      searchParameters,
+      options,
+      filter,
+    );
+  }
+
+  async searchDocumentByCollection(
+    collection: string,
+    searchParameters: SearchParams,
+    options: SearchOptions,
+    filter?: BaseFilterDto,
   ): Promise<SearchResponse<any>> {
     try {
-      const { includeIds = [], per_page = 25 } = { ...searchParameters };
+      const { per_page = 25 } = searchParameters;
       // TODO: should be support with include/exclude ids.
+      const { includeIds = [] } = filter;
       const includeDocuments = [];
+
       if (includeIds.length > 0) {
         const includeOpts = {
           ...searchParameters,
           filter_by: `id:=[${includeIds.join(', ')}]`,
         };
         const includeDocs = await this.client
-          .collections(this?.schema?.name || this.prefix)
+          .collections(collection)
           .documents()
           .search(includeOpts, options);
         if (includeDocs?.hits?.length > 0) {
@@ -73,7 +86,7 @@ export abstract class ClientService<
         includeDocuments.push(...includeDocs?.hits);
       }
       const documents = await this.client
-        .collections(this?.schema?.name || this.prefix)
+        .collections(collection)
         .documents()
         .search(searchParameters, options);
       if (includeDocuments.length > 0) {
@@ -108,7 +121,7 @@ export abstract class ClientService<
     if (data.length > 0) {
       try {
         return this.client
-          .collections(this?.schema?.name || this.prefix)
+          .collections(this.getCollectionName())
           .documents()
           .import(data, { action: 'upsert' });
       } catch (error) {
@@ -123,7 +136,7 @@ export abstract class ClientService<
         filter_by: `${key}:!=[${data.join(', ')}]`,
       };
       return await this.client
-        .collections(this?.schema?.name || this.prefix)
+        .collections(this.getCollectionName())
         .documents()
         .delete(deleteParameters);
     }
@@ -131,14 +144,14 @@ export abstract class ClientService<
 
   async insertIndex(data: Document): Promise<any> {
     return this.client
-      .collections(this?.schema?.name || this.prefix)
+      .collections(this.getCollectionName())
       .documents()
       .create(data, { action: 'upsert' });
   }
 
   async updateIndex(data: Document): Promise<any> {
     return this.client
-      .collections(this?.schema?.name || this.prefix)
+      .collections(this.getCollectionName())
       .documents()
       .upsert(data, { action: 'upsert' });
   }
@@ -146,12 +159,12 @@ export abstract class ClientService<
   updateDocumentById = async (data: Document) => {
     if (data?.id) {
       const exist = await this.client
-        .collections(this?.schema?.name || this.prefix)
+        .collections(this.getCollectionName())
         .documents(data.id)
         .retrieve();
       if (exist) {
         return this.client
-          .collections(this?.schema?.name || this.prefix)
+          .collections(this.getCollectionName())
           .documents(data.id)
           .update(data);
       }
@@ -164,14 +177,14 @@ export abstract class ClientService<
 
   async deleteIndex(data: Document): Promise<DeleteResponse> {
     return this.client
-      .collections(this?.schema?.name || this.prefix)
+      .collections(this.getCollectionName())
       .documents()
       .delete({ filter_by: `id: ${data.id}` });
   }
 
   async deleteBatchIndex(ids: string[]): Promise<DeleteResponse> {
     return this.client
-      .collections(this?.schema?.name || this.prefix)
+      .collections(this.getCollectionName())
       .documents()
       .delete({ filter_by: `id: [${ids.join(',')}]` });
   }
@@ -181,7 +194,7 @@ export abstract class ClientService<
     value: number,
   ): Promise<DeleteResponse> {
     return this.client
-      .collections(this?.schema?.name || this.prefix)
+      .collections(this.getCollectionName())
       .documents()
       .delete({ filter_by: `${key}:=${value}` });
   }
