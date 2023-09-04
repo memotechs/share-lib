@@ -61,7 +61,7 @@ export abstract class ClientService<
     try {
       const { per_page = 25 } = searchParameters;
       // TODO: should be support with include/exclude ids.
-      const includeIds: number[] = filter.includeIds || [];
+      const includeIds: number[] = filter?.includeIds || [];
       const includeDocuments = [];
 
       if (includeIds.length > 0) {
