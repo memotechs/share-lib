@@ -13,7 +13,6 @@ import { BaseDocument } from '../../document';
 import { SearchDocumentService } from '../../interface';
 import { EntityGeneric } from '../../../../generic';
 import { PaginationResponse } from '../../../../response';
-import { BaseFilterDto } from '../../../../dto';
 
 export abstract class ClientService<
   Document extends BaseDocument,
