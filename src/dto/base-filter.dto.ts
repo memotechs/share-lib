@@ -1,4 +1,4 @@
-export abstract class BaseFilterDto {
+export class BaseFilterDto {
   excludeIds: number[] = undefined;
   includeIds: number[] = undefined;
 }
