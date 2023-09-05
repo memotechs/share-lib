@@ -42,13 +42,11 @@ export abstract class ClientService<
   async searchDocument(
     searchParameters: SearchParams,
     options: SearchOptions,
-    filter?: BaseFilterDto,
   ): Promise<SearchResponse<any>> {
     return this.searchDocumentByCollection(
       this.getCollectionName(),
       searchParameters,
       options,
-      filter,
     );
   }
 
@@ -56,12 +54,9 @@ export abstract class ClientService<
     collection: string,
     searchParameters: SearchParams,
     options: SearchOptions,
-    filter?: BaseFilterDto,
   ): Promise<SearchResponse<any>> {
     try {
-      const { per_page = 25 } = searchParameters;
-      // TODO: should be support with include/exclude ids.
-      const includeIds: number[] = filter?.includeIds || [];
+      const { includeIds = [], per_page = 25 } = { ...searchParameters };
       const includeDocuments = [];
 
       if (includeIds.length > 0) {
