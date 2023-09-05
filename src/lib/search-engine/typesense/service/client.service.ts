@@ -13,6 +13,7 @@ import { BaseDocument } from '../../document';
 import { SearchDocumentService } from '../../interface';
 import { EntityGeneric } from '../../../../generic';
 import { PaginationResponse } from '../../../../response';
+import { BaseFilterDto } from '../../../../dto';
 
 export abstract class ClientService<
   Document extends BaseDocument,
@@ -41,11 +42,13 @@ export abstract class ClientService<
   async searchDocument(
     searchParameters: SearchParams,
     options: SearchOptions,
+    filter?: BaseFilterDto,
   ): Promise<SearchResponse<any>> {
     return this.searchDocumentByCollection(
       this.getCollectionName(),
       searchParameters,
       options,
+      filter,
     );
   }
 
@@ -53,10 +56,12 @@ export abstract class ClientService<
     collection: string,
     searchParameters: SearchParams,
     options: SearchOptions,
+    filter?: BaseFilterDto,
   ): Promise<SearchResponse<any>> {
     try {
-      const { includeIds = [], per_page = 25 } = { ...searchParameters };
+      const { per_page = 25 } = { ...searchParameters };
       const includeDocuments = [];
+      const includeIds = filter?.includeIds || [];
 
       if (includeIds.length > 0) {
         const includeOpts = {
