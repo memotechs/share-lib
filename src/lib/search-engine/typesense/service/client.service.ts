@@ -106,9 +106,9 @@ export abstract class ClientService<
     searchParameters.per_page = searchParameters.per_page ?? 250;
     options.cacheSearchResultsForSeconds = 1;
     const response = await this.searchDocument(searchParameters, options);
-    const { hits = [], found = 0, page = 1 } = response;
+    const { hits = [], found = 0, page = 1 } = { ...response };
     let documents = hits;
-    const hasNext = hits.length * page < found;
+    const hasNext = hits?.length * page < found;
     if (hasNext) {
       searchParameters.page = page + 1;
       documents = await this.getAllRawDocs(searchParameters, options);
