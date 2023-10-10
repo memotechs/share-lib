@@ -103,15 +103,17 @@ export abstract class ClientService<
     searchParameters: SearchParams,
     options: SearchOptions,
   ) => {
-    searchParameters.per_page = searchParameters.per_page ?? 250;
+    const per_page = searchParameters.per_page ?? 250;
+    searchParameters.per_page = per_page;
     options.cacheSearchResultsForSeconds = 1;
     const response = await this.searchDocument(searchParameters, options);
     const { hits = [], found = 0, page = 1 } = { ...response };
-    let documents = hits;
-    const hasNext = hits?.length * page < found;
+    const documents = hits;
+    const hasNext = per_page * page < found;
     if (hasNext) {
       searchParameters.page = page + 1;
-      documents = await this.getAllRawDocs(searchParameters, options);
+      const nextDocuments = await this.getAllRawDocs(searchParameters, options);
+      documents.push(...nextDocuments);
     }
     return documents;
   };

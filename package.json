@@ -1,6 +1,6 @@
 {
   "name": "mm-share-lib",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Share the generic service, entity, dto.",
   "author": "Mesa SOT",
   "license": "MIT",
