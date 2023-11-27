@@ -1,26 +1,21 @@
-import { DataSource } from 'typeorm';
-import { ConfigService } from '@nestjs/config';
-import { DatabaseConfig } from '../../config';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 export class DataSourceManager {
   private static instance: DataSourceManager;
 
-  private dataSources: { [key: string]: DataSource };
+  private readonly dataSources: { [key: string]: DataSource } = {};
 
-  private constructor(private configService: ConfigService<DatabaseConfig>) {
-    this.dataSources = {};
-  }
+  private constructor(private options: DataSourceOptions) {}
 
-  public static getInstance(): DataSourceManager {
+  public static getInstance(options: DataSourceOptions): DataSourceManager {
     if (!DataSourceManager.instance) {
-      // TODO: Fix DataSourceManager object instantiation
-      // DataSourceManager.instance = new DataSourceManager();
+      DataSourceManager.instance = new DataSourceManager(options);
     }
 
     return DataSourceManager.instance;
   }
 
-  async getDBDataSource(dataSourceName: string): Promise<DataSource> {
+  async getDataSource(dataSourceName: string): Promise<DataSource> {
     if (this.dataSources[dataSourceName]) {
       const dataSource = this.dataSources[dataSourceName];
       return dataSource.isInitialized
@@ -28,12 +23,10 @@ export class DataSourceManager {
         : await dataSource.initialize();
     }
 
-    const newDataSource = new DataSource({
-      /** connection info */
-    } as any);
+    const newDataSource = new DataSource(this.options);
 
     this.dataSources[dataSourceName] = newDataSource;
 
-    return await newDataSource.initialize();
+    return newDataSource.initialize();
   }
 }
