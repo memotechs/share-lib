@@ -22,14 +22,17 @@ export class BaseException extends HttpException {
   constructor(
     message: string,
     status: HttpStatus,
+    code?: string,
     parameters?: ParametersType,
   ) {
     super(message, status);
 
+    if (code) {
+      this.code = code;
+    }
     if (parameters) {
       this.parameters = parameters;
     }
-
     this.statusCode = super.getStatus();
     Error.captureStackTrace(this);
   }
